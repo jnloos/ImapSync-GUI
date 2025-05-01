@@ -1,0 +1,22 @@
+{
+  "sections": {
+    "source": "Quell-Postfach",
+    "target": "Ziel-Postfach",
+    "output": "Migrationsprotokolle"
+  },
+
+  "fields": {
+    "host": "Host",
+    "port": "Port",
+    "user": "Benutzer",
+    "password": "Passwort"
+  },
+
+  "button_start": "Migration starten",
+  "button_clear": "Protokoll löschen",
+
+  "check_failed": "Verbindungsprüfung fehlgeschlagen. Bitte überprüfe die Zugangsdaten.",
+  "migration_starting": "Migration wird gestartet...",
+  "migration_success": "Migration erfolgreich abgeschlossen.",
+  "migration_failed": "Migration fehlgeschlagen."
+}

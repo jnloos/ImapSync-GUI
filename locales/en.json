@@ -1,0 +1,22 @@
+{
+  "sections": {
+    "source": "Source Mailbox",
+    "target": "Target Mailbox",
+    "output": "Migration Logs"
+  },
+
+  "fields": {
+    "host": "Host",
+    "port": "Port",
+    "user": "User",
+    "password": "Password"
+  },
+
+  "button_start": "Start Migration",
+  "button_clear": "Clear Logs",
+
+  "check_failed": "Connection check failed. Please verify the credentials.",
+  "migration_starting": "Starting migration...",
+  "migration_success": "Migration completed successfully.",
+  "migration_failed": "Migration failed."
+}
