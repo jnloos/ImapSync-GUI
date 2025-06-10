@@ -1,4 +1,4 @@
-### IMAPSync GUI
+## IMAPSync GUI
 
 I constantly need to migrate email inboxes between servers - a tedious task. I struggled to find a free and satisfactory 
 solution which could save stress and time.
@@ -9,11 +9,11 @@ transfer IMAP folders with a few clicks and graphical feedback.
 
 ![IMAPSync GUI Screenshot](media/screenshot.png)
 
-### Requirements
+## Requirements
 
 Requires Python 3.8 or higher and the Imapsync command-line tool installed and available in your PATH.
 
-### Using the Script
+## Using the Script
 
 To launch the GUI in development mode, run:
 
@@ -24,7 +24,7 @@ python main.py [lang]
 The optional `lang` parameter loads translations from the `/locales` directory (currently `en` and `de`). New
 languages can be added simply by dropping further translation files into `/locales`.
 
-### Using the Binaries
+## Using the Binaries
 
 Alternatively, you can use the pre-compiled executables located in the `./bin` directory. These binaries are 
 self-contained and do not require a Python installation to run.
