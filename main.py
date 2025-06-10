@@ -1,11 +1,11 @@
+import os
 import sys
 import tkinter as tk
-from Localization import Localization
-from ImapSyncWindow import ImapSyncWindow
-
+from app.Localization import Localization
+from app.ImapSyncWindow import ImapSyncWindow
 
 def main():
-    # Load localization
+    # Load translations
     lang = sys.argv[1] if len(sys.argv) > 1 else "en"
     Localization.load(lang)
 

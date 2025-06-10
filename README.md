@@ -13,15 +13,26 @@ transfer IMAP folders with a few clicks and graphical feedback.
 
 Requires Python 3.8 or higher and the Imapsync command-line tool installed and available in your PATH.
 
-### Execution
+### Using the Script
 
-## Usage
-
-To launch the GUI, run:
+To launch the GUI in development mode, run:
 
 ```bash
 python main.py [lang]
-````
+```
 
-The optional `lang` parameter loads translations from the `/locales` directory (currently `en` and `de`). New 
+The optional `lang` parameter loads translations from the `/locales` directory (currently `en` and `de`). New
 languages can be added simply by dropping further translation files into `/locales`.
+
+### Using the Binaries
+
+Alternatively, you can use the pre-compiled executables located in the `./bin` directory. These binaries are 
+self-contained and do not require a Python installation to run.
+
+```bash
+# For Linux:
+./ImapSync-GUI [lang]
+
+# For Windows:
+.\ImapSync-GUI.exe [lang]
+```
