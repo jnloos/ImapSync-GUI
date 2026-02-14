@@ -110,7 +110,7 @@ class ImapSyncWindow:
             self.output_box.append(__("migration_success"))
         else:
             self.output_box.append(f"{__('migration_failed')} (Code {process.returncode})")
-        self.start_button.config(state="normal")
+        self.root.after(0, lambda: self.start_button.config(state="normal"))
 
     def __build_config(self) -> dict[str, str]:
         src = self.source_form.get_config()
