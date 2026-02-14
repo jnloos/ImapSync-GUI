@@ -1,5 +1,5 @@
 import tkinter as tk
-from threading import Thread
+from threading import Lock, Thread
 from app.ImapSync import ImapSync
 from app.Localization import __
 from app.modules.CredentialForm import CredentialForm
@@ -9,6 +9,9 @@ from app.modules.StatusIndicator import StatusIndicator
 class ImapSyncWindow:
     def __init__(self, root: tk.Tk):
         self.root = root
+        self._process_lock = Lock()
+        self._running_process = None
+        self._stop_requested = False
         self.root.title("IMAPSync")
         self.root.geometry("900x600")
         self.root.configure(bg="white")
@@ -62,6 +65,17 @@ class ImapSyncWindow:
         )
         self.start_button.pack(side="left", padx=10)
 
+        self.stop_button = tk.Button(
+            button_frame,
+            text=__("button_stop"),
+            bg="#C62828",
+            fg="white",
+            font=("Arial", 11, "bold"),
+            command=self.__stop_sync,
+            state="disabled"
+        )
+        self.stop_button.pack(side="left", padx=10)
+
         tk.Button(
             button_frame,
             text=__("button_clear"),
@@ -80,6 +94,10 @@ class ImapSyncWindow:
     def __clear_output(self):
         self.output_box.clear()
 
+    def __set_running_state(self, running: bool):
+        self.start_button.config(state="disabled" if running else "normal")
+        self.stop_button.config(state="normal" if running else "disabled")
+
     def __start_sync(self):
         cfg = self.__build_config()
 
@@ -94,23 +112,54 @@ class ImapSyncWindow:
 
         # Start migration if valid
         self.output_box.append(__("migration_starting"))
-        self.start_button.config(state="disabled")
+        self._stop_requested = False
+        self.__set_running_state(True)
         Thread(target=self.__run_sync, daemon=True).start()
+
+    def __stop_sync(self):
+        self._stop_requested = True
+        self.stop_button.config(state="disabled")
+        self.output_box.append(__("migration_stopping"))
+
+        with self._process_lock:
+            process = self._running_process
+
+        if process is None:
+            return
+
+        try:
+            process.terminate()
+        except Exception:
+            pass
 
     def __run_sync(self):
         # Run process and display logs
         cfg = self.__build_config()
         process = ImapSync(cfg).sync_process()
+        with self._process_lock:
+            self._running_process = process
+
+        if self._stop_requested:
+            try:
+                process.terminate()
+            except Exception:
+                pass
+
         for line in process.stdout:
             self.output_box.append(line.strip())
         process.wait()
 
+        with self._process_lock:
+            self._running_process = None
+
         # Feedback and reset
         if process.returncode == 0:
             self.output_box.append(__("migration_success"))
+        elif self._stop_requested:
+            self.output_box.append(__("migration_stopped"))
         else:
             self.output_box.append(f"{__('migration_failed')} (Code {process.returncode})")
-        self.root.after(0, lambda: self.start_button.config(state="normal"))
+        self.root.after(0, lambda: self.__set_running_state(False))
 
     def __build_config(self) -> dict[str, str]:
         src = self.source_form.get_config()

@@ -13,10 +13,13 @@
   },
 
   "button_start": "Migration starten",
+  "button_stop": "Stoppen",
   "button_clear": "Protokoll löschen",
 
   "check_failed": "Verbindungsprüfung fehlgeschlagen. Bitte überprüfe die Zugangsdaten.",
   "migration_starting": "Migration wird gestartet...",
+  "migration_stopping": "Migration wird gestoppt...",
+  "migration_stopped": "Migration gestoppt.",
   "migration_success": "Migration erfolgreich abgeschlossen.",
   "migration_failed": "Migration fehlgeschlagen."
 }
